@@ -1,9 +1,13 @@
 ﻿using emptables.App_Start;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Text;
 using System.Web.Http;
 
 namespace authordatabase.Controllers
@@ -197,6 +201,50 @@ namespace authordatabase.Controllers
             {
                 return InternalServerError(ex);
             }
+
+        }
+            
+            
+            
+            
+            
+            private string GenerateToken(string username)
+
+
+
+
+            {
+
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("73C2FD55D4152D973A5B671C6114DCF6535B443BE2748B9197312B2FB94BB827DEE2942B4238C92529C5F28217"));
+                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+                var claims = new[]
+                {
+              new Claim(ClaimTypes.Name, username),
+          // Add additional claims as needed
+      };
+
+                var token = new JwtSecurityToken(
+                    issuer: "GT",
+                    audience: "Dev",
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddHours(1), // Adjust the expiration time as needed
+                    signingCredentials: credentials
+                );
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                return tokenHandler.WriteToken(token);
+
+            }
+
+
+
+
+
+
+
+
+
         }
 
 
@@ -212,5 +260,4 @@ namespace authordatabase.Controllers
 
 
 
-}
 

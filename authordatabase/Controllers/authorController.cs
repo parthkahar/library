@@ -15,7 +15,7 @@ namespace authordatabase.Controllers
 
         [HttpPost]
         [Route("author/addauthor")]
-        [JwtAuthorizationFilter]
+        
 
         public IHttpActionResult createnewauthor(author_table author)
         {

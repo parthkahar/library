@@ -14,7 +14,7 @@ namespace authordatabase.Controllers
     {
         [HttpPost]
         [Route("booktable/addbook")]
-        [JwtAuthorizationFilter]
+        
         public IHttpActionResult CreateBook(Book_Table book)
         {
             try
@@ -73,6 +73,7 @@ namespace authordatabase.Controllers
         }
         [HttpPut]
         [Route("booktable/editdata")]
+        
         public IHttpActionResult UpdateBook_table(int book_id, Book_Table book)
         {
             try
@@ -111,7 +112,7 @@ namespace authordatabase.Controllers
                 Book_Table book = authorEntities.Book_Table.FirstOrDefault(e => e.book_id == book_id);
                 authorEntities.Book_Table.Remove(book);
                 authorEntities.SaveChanges();
-                return Ok(authorEntities);
+                return Ok(book);
             }
             catch (Exception ex)
             {
